@@ -35,15 +35,15 @@ const userSchema = new mongoose.Schema({
   session_state: String,
 });
 
-export const DesignerModel = mongoose.model("Designer");
-export const UserModel = mongoose.model("User");
+// export const DesignerModel = mongoose.model("Designer");
+// export const UserModel = mongoose.model("User");
 // export const DesignerModel = mongoose.model("Designer", designerSchema);
 // export const UserModel = mongoose.model("User", userSchema);
 
-// export const DesignerModel =
-//   mongoose.model("Designer", designerSchema) || mongoose.model("Designer");
-// export const UserModel =
-//   mongoose.model("User", userSchema) || mongoose.model("User");
+export const DesignerModel =
+  mongoose.model("Designer", designerSchema) || mongoose.model("Designer");
+export const UserModel =
+  mongoose.model("User", userSchema) || mongoose.model("User");
 
 export const userModelDB = mongoose.model("User");
 export const designerModelDB = mongoose.model("Designer");
