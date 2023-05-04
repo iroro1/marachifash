@@ -1,1 +1,1 @@
-# marachifash
+"Tribal Threadz" is a great name for your customizable African e-commerce fashion store that features tribal designs. It has a catchy and memorable spelling, which could make it stand out and be easily recognizable to potential customers. Additionally, the name effectively communicates the tribal theme of your brand, which can help draw in customers who are looking for unique and culturally-inspired fashion items. Overall, "Tribal Threadz" is a strong and fitting choice for your business name.
