@@ -20,7 +20,7 @@ const inspire = ({ designList = [] }) => {
         <h1 className="text-2xl mt-10">Inspire US</h1>
 
         <div className="md:flex gap-5 flex-wrap flex justify-center">
-          {designList.map((item) => (
+          {designList?.map((item) => (
             // eslint-disable-next-line
             <DesignerCard data={item} />
           ))}
@@ -36,7 +36,7 @@ export async function getStaticProps() {
   let designList = [];
   try {
     const { data } = await axios.get("http://localhost:3000/api/designers/");
-    designList = data.data;
+    designList = data.data || null;
   } catch (error) {
     console.log(error);
   }

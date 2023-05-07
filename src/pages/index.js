@@ -1,13 +1,14 @@
 import DesignerCard from "@/components//DesignerCard";
 import Container from "@/components/Container";
 import { colors } from "@/config/colors";
-import Link from "next/link";
-import { useSelector } from "react-redux";
 import axios from "axios";
-import { firebaseConfig } from "./_app";
+import Link from "next/link";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function Home({ topRated = [] }) {
   const { theme, lang } = useSelector((a) => a.applicationStore);
+
   return (
     <div
       style={{
@@ -151,7 +152,7 @@ export async function getServerSideProps() {
   const apiUrl = "http://localhost:3000/api/designers/";
   try {
     const { data } = await axios.get(apiUrl);
-    topRated = data.data.slice(0, 5);
+    topRated = data.data.slice(0, 5) || null;
   } catch (error) {
     console.log(error);
   }

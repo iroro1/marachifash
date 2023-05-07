@@ -36,7 +36,7 @@ export async function getStaticProps() {
   let designerList = [];
   try {
     const { data } = await axios.get("http://localhost:3000/api/designers/");
-    designerList = data.data;
+    designerList = data.data || null;
   } catch (error) {
     console.log(error);
   }

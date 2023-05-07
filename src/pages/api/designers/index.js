@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { designerModelDB, DesignerModel } from "@/database/schema";
 import { main } from "@/database/connection";
+import { DesignerModel } from "@/database/schema";
 
 export default async function handler(req, res) {
   main().catch((err) => console.log(err));
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
       res.status(200).json(designer);
     });
   } else if (req.method === "GET") {
-    const designer = designerModelDB;
+    const designer = DesignerModel;
 
     try {
       const list = await designer.find({});
@@ -20,7 +20,8 @@ export default async function handler(req, res) {
         .status(200)
         .json({ data: list, count: list.length, message: "Success" });
     } catch (error) {
-      res.status(500).json({ error: "Something went wrong" });
+      res.json({ error: error.err });
     }
   }
 }
+const recall = (rq, rs) => handler(rq, rs);

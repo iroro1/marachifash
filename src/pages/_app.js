@@ -1,10 +1,10 @@
-import "@/styles/globals.css";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
 import Layout from "@/components/Layout";
-import { Kalam, Indie_Flower, Yanone_Kaffeesatz } from "next/font/google";
+import "@/styles/globals.css";
+import { Indie_Flower, Kalam, Yanone_Kaffeesatz } from "next/font/google";
+import { useRouter } from "next/router";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
-import { useRouter } from "next/router";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 const indie_Flower = Indie_Flower({
   subsets: ["latin"],
@@ -21,8 +21,6 @@ const kalam = Kalam({
 
 export default function App({ Component, pageProps, title, description }) {
   const pathName = useRouter().pathname.split("/");
-
-  // console.log(app);
   return (
     <Provider store={store}>
       <>
