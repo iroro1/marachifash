@@ -8,22 +8,7 @@ import { useEffect } from "react";
 const inspire = ({ designList = [] }) => {
   // eslint-disable-next-line
   const { theme } = useSelector((a) => a.applicationStore);
-  let refresh;
-  if (typeof window !== "undefined") {
-    refresh = window.sessionStorage.getItem("refreshTTInspire");
-  }
 
-  useEffect(() => {
-    if (designList.length === 0) {
-      if (refresh === null) {
-        window.sessionStorage.setItem("refreshTTInspire", 1);
-        window.location.reload();
-      }
-      return () => {
-        clearTimeout();
-      };
-    }
-  }, []);
   return (
     <div
       style={{
@@ -54,7 +39,9 @@ export default inspire;
 export async function getStaticProps() {
   let designList = [];
   try {
-    const { data } = await axios.get("http://localhost:3000/api/designers/");
+    const { data } = await axios.get(
+      "https://tribal-trends.netlify.app/api/designers/"
+    );
     designList = data.data || [];
   } catch (error) {
     console.log(error);

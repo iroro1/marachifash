@@ -109,7 +109,7 @@ export async function getStaticProps(context) {
   let details = {};
   try {
     const { data } = await axios.get(
-      "http://localhost:3000/api/designers/" + params.id
+      "https://tribal-trends.netlify.app/api/designers/" + params.id
     );
     details = data.data;
   } catch (error) {

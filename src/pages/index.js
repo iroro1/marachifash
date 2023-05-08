@@ -9,22 +9,7 @@ import { useSelector } from "react-redux";
 
 export default function Home({ topRated = [] }) {
   const { theme, lang } = useSelector((a) => a.applicationStore);
-  let refresh;
-  if (typeof window !== "undefined") {
-    refresh = window.sessionStorage.getItem("refreshTTIndex");
-  }
-
-  useEffect(() => {
-    if (topRated.length === 0) {
-      if (refresh === null) {
-        window.sessionStorage.setItem("refreshTTIndex", 1);
-        window.location.reload();
-      }
-      return () => {
-        clearTimeout();
-      };
-    }
-  }, []);
+  console.log(process.env.API_BASE, "API BASE");
   return (
     <div
       style={{
@@ -173,7 +158,7 @@ Nos accessoires vont des bijoux fabriqués à la main avec des matériaux nature
 
 export async function getServerSideProps() {
   let topRated = [];
-  const apiUrl = "http://localhost:3000/api/designers/";
+  const apiUrl = "https://tribal-trends.netlify.app/api/designers/";
   try {
     const { data } = await axios.get(apiUrl);
     topRated = data.data.slice(0, 5) || [];

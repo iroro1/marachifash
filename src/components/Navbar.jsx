@@ -175,7 +175,7 @@ const Navbar = () => {
 
           <HambergerMenu
             onClick={() => setShowHam(!showHam)}
-            className="lg:hidden"
+            className="md:hidden"
           />
           {showHam && (
             <ClickAwayListener onClickAway={() => setShowHam(!showHam)}>
