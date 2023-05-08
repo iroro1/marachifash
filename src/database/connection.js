@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
-import { designerSchema } from "./schema";
+import { designerSchema, userSchema } from "./schema";
 
 export let DesignerModel;
+export let UserModel;
 export const main = async () => {
   await mongoose
     .connect(
@@ -9,9 +10,11 @@ export const main = async () => {
     )
     .then(() => {
       DesignerModel = mongoose.model("Designer", designerSchema);
+      UserModel = mongoose.model("User", userSchema);
     })
     .catch(() => {
       DesignerModel = mongoose.model("Designer");
+      UserModel = mongoose.model("User");
     });
   console.log(res, "DB Connected");
 };

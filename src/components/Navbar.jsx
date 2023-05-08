@@ -5,14 +5,15 @@ import {
   HambergerMenu,
   Home,
   InfoCircle,
+  Logout,
   People,
   ShoppingBag,
 } from "iconsax-react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import {
-  FaCartPlus,
   FaGoogle,
   FaMailBulk,
   FaPhone,
@@ -28,8 +29,11 @@ const Navbar = () => {
   const router = useRouter();
 
   const { theme, lang } = useSelector((a) => a.applicationStore);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showHam, setShowHam] = useState(false);
+
+  const { data: isAuthenticated, status } = useSession();
+
+  console.log(isAuthenticated, "LOGIN DATA");
 
   return (
     <nav
@@ -84,7 +88,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <h1 className="flex items-center gap-3 ">
               <Logo />
-              <span className="text-md">Tribal Trendz</span>
+              <span className="text-sm md:text-md">Tribal Trendz</span>
             </h1>
           </div>
           <div className="hidden md:flex items-center gap-2 text-sm ">
@@ -150,32 +154,43 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <div>
               {isAuthenticated ? (
-                <div>Profile</div>
+                <div className="flex items-center">
+                  <div>
+                    <img
+                      width={30}
+                      height={30}
+                      className="rounded-[50%] mr-2"
+                      src={isAuthenticated.user.image}
+                    />
+                  </div>
+                  <span
+                    onClick={() => signOut()}
+                    className="h-[35px] flex items-center gap-1 py-2 px-2 text-[12px] bg-white text-black rounded-md animate font-semibold cursor-pointer hover:scale-105 z-0"
+                  >
+                    <Logout color="#4285f4" size={16} />{" "}
+                    <span>{lang === "en" ? "Logout" : "Se déconnecter"}</span>
+                  </span>
+                </div>
               ) : (
                 <div className="relative z-0">
                   <span
-                    // onClick={() => setShowAuthDD(true)}
-                    className="h-[35px] flex items-center gap-2 py-2 px-4 text-[12px] bg-white text-black rounded-md animate font-semibold cursor-pointer hover:scale-105 z-0"
+                    onClick={() => signIn("google")}
+                    className="h-[35px] flex items-center gap-1 py-2 px-2 text-[12px] bg-white text-black rounded-md animate font-semibold cursor-pointer hover:scale-105 z-0"
                   >
-                    <FaGoogle color="#4285f4" />{" "}
+                    <FaGoogle color="#4285f4" size={12} />{" "}
                     <span>{lang === "en" ? "Login" : "Connexion"}</span>
                   </span>
-                  {/* {showAuthDD && (
-                    <div className="absolute right-0 top-10 ">
-                      <LoginDD clickAwayFn={() => setShowAuthDD(false)} />
-                    </div>
-                  )} */}
                 </div>
               )}
             </div>
             <div>
-              <ShoppingBag className="cursor-pointer" />
+              <ShoppingBag className="cursor-pointer w-[17px] sm:w-[24px]" />
             </div>
           </div>
 
           <HambergerMenu
             onClick={() => setShowHam(!showHam)}
-            className="md:hidden"
+            className="md:hidden cursor-pointer w-[17px] sm:w-[24px]"
           />
           {showHam && (
             <ClickAwayListener onClickAway={() => setShowHam(!showHam)}>
