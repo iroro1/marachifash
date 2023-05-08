@@ -46,14 +46,14 @@ const designerDetail = ({ details }) => {
           {" "}
           Meet <b>{details?.name}</b>
         </h1>
-        <div className="h-[400px] flex gap-5">
+        <div className="h-[100%] flex flex-col md:flex-row gap-5">
           <img
             className="rounded-[50%] transition-all duration-500 hover:scale-90 shadow-md border-8 borrder-[#fff] object-cover w-[300px] h-[300px]"
             src={details?.imgSrc}
             alt="designer Profile Image"
           />
 
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2">
             <ul>
               <li>
                 <b>Country :</b> <span>{details?.country}</span>
@@ -81,7 +81,7 @@ const designerDetail = ({ details }) => {
           </div>
         </div>
 
-        <div className="flex overflow-auto no-scrollbar gap-3 pb-8">
+        <div className="flex mt-4 overflow-auto no-scrollbar gap-3 pb-8">
           {details?.works?.map((work) => (
             <WorkCard key={work._id} data={work} />
           ))}
