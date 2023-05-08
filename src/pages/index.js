@@ -4,6 +4,7 @@ import Container from "@/components/Container";
 import { colors } from "@/config/colors";
 import axios from "axios";
 import Link from "next/link";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 export default function Home({ topRated = [] }) {
@@ -12,15 +13,18 @@ export default function Home({ topRated = [] }) {
   if (typeof window !== "undefined") {
     refresh = window.sessionStorage.getItem("refreshTTIndex");
   }
-  setTimeout(() => {
-    if (refresh === null) {
-      window.sessionStorage.setItem("refreshTTIndex", 1);
-      window.location.reload();
+
+  useEffect(() => {
+    if (topRated.length === 0) {
+      if (refresh === null) {
+        window.sessionStorage.setItem("refreshTTIndex", 1);
+        window.location.reload();
+      }
+      return () => {
+        clearTimeout();
+      };
     }
-    return () => {
-      clearTimeout();
-    };
-  }, 2000);
+  }, []);
   return (
     <div
       style={{

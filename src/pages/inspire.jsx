@@ -3,11 +3,27 @@ import { useSelector } from "react-redux";
 import { colors } from "@/config/colors";
 import DesignerCard from "@/components/DesignerCard";
 import axios from "axios";
+import { useEffect } from "react";
 
 const inspire = ({ designList = [] }) => {
   // eslint-disable-next-line
   const { theme } = useSelector((a) => a.applicationStore);
+  let refresh;
+  if (typeof window !== "undefined") {
+    refresh = window.sessionStorage.getItem("refreshTTInspire");
+  }
 
+  useEffect(() => {
+    if (designList.length === 0) {
+      if (refresh === null) {
+        window.sessionStorage.setItem("refreshTTInspire", 1);
+        window.location.reload();
+      }
+      return () => {
+        clearTimeout();
+      };
+    }
+  }, []);
   return (
     <div
       style={{

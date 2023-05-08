@@ -3,6 +3,7 @@ import RatingComp from "@/components/RatingComp";
 import WorkCard from "@/components/WorkCard";
 import { colors } from "@/config/colors";
 import axios from "axios";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const designerDetail = ({ details }) => {
@@ -20,15 +21,18 @@ const designerDetail = ({ details }) => {
   if (typeof window !== "undefined") {
     refresh = window.sessionStorage.getItem("refreshTTDesigner");
   }
-  setTimeout(() => {
-    if (refresh === null) {
-      window.sessionStorage.setItem("refreshTTDesigner", 1);
-      window.location.reload();
+
+  useEffect(() => {
+    if (!details?.name) {
+      if (refresh === null) {
+        window.sessionStorage.setItem("refreshTTDesigner", 1);
+        window.location.reload();
+      }
+      return () => {
+        clearTimeout();
+      };
     }
-    return () => {
-      clearTimeout();
-    };
-  }, 2000);
+  }, []);
   return (
     <div
       style={{

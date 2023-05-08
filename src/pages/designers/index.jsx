@@ -3,6 +3,7 @@ import DesignerCard from "@/components/DesignerCard";
 import { colors } from "@/config/colors";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useEffect } from "react";
 
 const designers = ({ designerList = [] }) => {
   // eslint-disable-next-line
@@ -11,15 +12,18 @@ const designers = ({ designerList = [] }) => {
   if (typeof window !== "undefined") {
     refresh = window.sessionStorage.getItem("refreshTTDesigners");
   }
-  setTimeout(() => {
-    if (refresh === null) {
-      window.sessionStorage.setItem("refreshTTDesigners", 1);
-      window.location.reload();
+
+  useEffect(() => {
+    if (designerList.length === 0) {
+      if (refresh === null) {
+        window.sessionStorage.setItem("refreshTTDesigners", 1);
+        window.location.reload();
+      }
+      return () => {
+        clearTimeout();
+      };
     }
-    return () => {
-      clearTimeout();
-    };
-  }, 2000);
+  }, []);
   return (
     <div
       style={{
