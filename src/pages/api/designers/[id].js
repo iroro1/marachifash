@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { main } from "@/database/connection";
-import { DesignerModel } from "@/database/schema";
+import { main, DesignerModel } from "@/database/connection";
+// import { DesignerModel } from "@/database/schema";
 
 // git lfs migrate
 export default async function handler(req, res) {

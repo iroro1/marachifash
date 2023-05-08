@@ -21,6 +21,7 @@
     "flag-icons": "^6.6.6",
     "google-translate-api": "^2.3.0",
     "iconsax-react": "^0.0.8",
+    "mongodb": "^5.4.0",
     "mongoose": "^7.1.0",
     "next": "13.3.0",
     "react": "18.2.0",

@@ -15,6 +15,20 @@ const designerDetail = ({ details }) => {
     arr?.forEach((itm) => (totalRate += +itm?.rating));
     return (totalRate / len).toFixed(1);
   };
+
+  let refresh;
+  if (typeof window !== "undefined") {
+    refresh = window.sessionStorage.getItem("refreshTTDesigner");
+  }
+  setTimeout(() => {
+    if (refresh === null) {
+      window.sessionStorage.setItem("refreshTTDesigner", 1);
+      window.location.reload();
+    }
+    return () => {
+      clearTimeout();
+    };
+  }, 2000);
   return (
     <div
       style={{

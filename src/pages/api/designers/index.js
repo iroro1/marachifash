@@ -1,10 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { main } from "@/database/connection";
-import { DesignerModel } from "@/database/schema";
+import { main, DesignerModel } from "@/database/connection";
+// import { DesignerModel } from "@/database/schema";
 
 export default async function handler(req, res) {
   main().catch((err) => console.log(err));
-
   if (req.method === "POST") {
     // Working
     const designer = new DesignerModel(req.body);
@@ -24,4 +23,3 @@ export default async function handler(req, res) {
     }
   }
 }
-const recall = (rq, rs) => handler(rq, rs);

@@ -7,7 +7,19 @@ import axios from "axios";
 const designers = ({ designerList = [] }) => {
   // eslint-disable-next-line
   const { theme } = useSelector((a) => a.applicationStore);
-
+  let refresh;
+  if (typeof window !== "undefined") {
+    refresh = window.sessionStorage.getItem("refreshTTDesigners");
+  }
+  setTimeout(() => {
+    if (refresh === null) {
+      window.sessionStorage.setItem("refreshTTDesigners", 1);
+      window.location.reload();
+    }
+    return () => {
+      clearTimeout();
+    };
+  }, 2000);
   return (
     <div
       style={{
@@ -20,12 +32,16 @@ const designers = ({ designerList = [] }) => {
         <h1 className="text-2xl mt-5"> Designers</h1>
 
         <div>{/* <span>All</span> */}</div>
-        <div className="md:flex gap-5 flex-wrap flex justify-center">
-          {designerList.map((item) => (
-            // eslint-disable-next-line
-            <DesignerCard data={item} />
-          ))}
-        </div>
+        {designerList?.length > 0 ? (
+          <div className="md:flex gap-5 flex-wrap flex justify-center">
+            {designerList?.map((item) => (
+              // eslint-disable-next-line
+              <DesignerCard data={item} />
+            ))}
+          </div>
+        ) : (
+          <span>Loading ...</span>
+        )}
       </Container>
     </div>
   );
@@ -36,7 +52,7 @@ export async function getStaticProps() {
   let designerList = [];
   try {
     const { data } = await axios.get("http://localhost:3000/api/designers/");
-    designerList = data.data || null;
+    designerList = data.data || [];
   } catch (error) {
     console.log(error);
   }

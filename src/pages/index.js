@@ -1,14 +1,26 @@
+"use client";
 import DesignerCard from "@/components//DesignerCard";
 import Container from "@/components/Container";
 import { colors } from "@/config/colors";
 import axios from "axios";
 import Link from "next/link";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 export default function Home({ topRated = [] }) {
   const { theme, lang } = useSelector((a) => a.applicationStore);
-
+  let refresh;
+  if (typeof window !== "undefined") {
+    refresh = window.sessionStorage.getItem("refreshTTIndex");
+  }
+  setTimeout(() => {
+    if (refresh === null) {
+      window.sessionStorage.setItem("refreshTTIndex", 1);
+      window.location.reload();
+    }
+    return () => {
+      clearTimeout();
+    };
+  }, 2000);
   return (
     <div
       style={{
@@ -117,14 +129,18 @@ Nos accessoires vont des bijoux fabriqués à la main avec des matériaux nature
                 ? "Top Rated Designers"
                 : "Designers les mieux notés"}
             </h1>
-            <div className="flex gap-3 overflow-x-auto scroll-smooth no-scrollbar">
-              {topRated.map((person) => (
-                // eslint-disable-next-line
-                <div>
-                  <DesignerCard data={person} />
-                </div>
-              ))}
-            </div>
+            {topRated.length > 0 ? (
+              <div className="flex gap-3 overflow-x-auto scroll-smooth no-scrollbar">
+                {topRated.map((person) => (
+                  // eslint-disable-next-line
+                  <div>
+                    <DesignerCard data={person} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <span>Loading ...</span>
+            )}
           </div>
           <div className="my-10 ">
             <h1 className="mb-3">
@@ -132,14 +148,18 @@ Nos accessoires vont des bijoux fabriqués à la main avec des matériaux nature
                 ? "Premium Designers"
                 : "Concepteurs haut de gamme"}
             </h1>
-            <div className="flex gap-3 overflow-x-auto scroll-smooth no-scrollbar">
-              {topRated.map((person) => (
-                // eslint-disable-next-line
-                <div>
-                  <DesignerCard data={person} />
-                </div>
-              ))}
-            </div>
+            {topRated.length > 0 ? (
+              <div className="flex gap-3 overflow-x-auto scroll-smooth no-scrollbar">
+                {topRated.map((person) => (
+                  // eslint-disable-next-line
+                  <div>
+                    <DesignerCard data={person} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <span>Loading ...</span>
+            )}
           </div>
         </Container>
       </div>
@@ -152,7 +172,7 @@ export async function getServerSideProps() {
   const apiUrl = "http://localhost:3000/api/designers/";
   try {
     const { data } = await axios.get(apiUrl);
-    topRated = data.data.slice(0, 5) || null;
+    topRated = data.data.slice(0, 5) || [];
   } catch (error) {
     console.log(error);
   }

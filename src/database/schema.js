@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const designerSchema = new mongoose.Schema({
+export const designerSchema = new mongoose.Schema({
   imgSrc: String,
   name: String,
   country: String,
@@ -14,7 +14,7 @@ const designerSchema = new mongoose.Schema({
     },
   ],
 });
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
   name: String,
   image: String,
   email: String,
@@ -35,9 +35,9 @@ const userSchema = new mongoose.Schema({
   session_state: String,
 });
 
-export const DesignerModel = mongoose.model("Designer");
-// export const UserModel = mongoose.model("User");
+// export const DesignerModel = mongoose.model("Designer");
 // export const DesignerModel = mongoose.model("Designer", designerSchema);
+// export const UserModel = mongoose.model("User");
 // export const UserModel = mongoose.model("User", userSchema);
 
 // export const DesignerModel =
