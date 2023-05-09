@@ -15,3 +15,10 @@ export const starsFn = (arr) => {
 //       console.error(err);
 //     });
 // };
+export const addEllipses = (txt, maxLength, numOfDots = 3) => {
+  let dots = "";
+  for (let i = 0; i < numOfDots; i++) {
+    dots += ".";
+  }
+  return txt?.length < maxLength ? txt : txt?.slice(0, maxLength) + dots;
+};

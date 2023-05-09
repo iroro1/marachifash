@@ -1,4 +1,5 @@
 import { colors } from "@/config/colors";
+import { addEllipses } from "@/config/utility";
 import { ClickAwayListener } from "@mui/base";
 import {
   Designtools,
@@ -7,7 +8,10 @@ import {
   InfoCircle,
   Logout,
   People,
+  Setting,
+  Setting2,
   ShoppingBag,
+  User,
 } from "iconsax-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -30,10 +34,12 @@ const Navbar = () => {
 
   const { theme, lang } = useSelector((a) => a.applicationStore);
   const [showHam, setShowHam] = useState(false);
+  const [showDD, setShowDD] = useState(false);
 
   const { data: isAuthenticated, status } = useSession();
 
   console.log(isAuthenticated, "LOGIN DATA");
+  console.log(showDD, "LOGIN DATA");
 
   return (
     <nav
@@ -154,22 +160,74 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <div>
               {isAuthenticated ? (
-                <div className="flex items-center">
-                  <div>
+                <div className="relative">
+                  <div
+                    className="flex items-center w-[100px]"
+                    onClick={() => setShowDD(true)}
+                  >
                     <img
                       width={30}
                       height={30}
                       className="rounded-[50%] mr-2"
                       src={isAuthenticated.user.image}
                     />
+                    <span className="text-[12px]">
+                      {addEllipses(
+                        isAuthenticated.user.name.split(" ")[0],
+                        10,
+                        1
+                      )}
+                    </span>
                   </div>
-                  <span
-                    onClick={() => signOut()}
-                    className="h-[35px] flex items-center gap-1 py-2 px-2 text-[12px] bg-white text-black rounded-md animate font-semibold cursor-pointer hover:scale-105 z-0"
-                  >
-                    <Logout color="#4285f4" size={16} />{" "}
-                    <span>{lang === "en" ? "Logout" : "Se déconnecter"}</span>
-                  </span>
+                  {showDD && (
+                    <ClickAwayListener onClickAway={() => setShowDD(false)}>
+                      <div
+                        style={{
+                          background: colors[theme].navTopBg,
+                          color: colors[theme].navTopText,
+                        }}
+                        className="absolute p-2 rounded-lg shadow-mg z-20 top-10 right-0 w-[200px] h-[200px] shadow-md"
+                      >
+                        <div className="relative h-full w-full">
+                          <div className="flex items-center">
+                            <img
+                              width={40}
+                              height={40}
+                              className="rounded-[50%] shadow-sm border border-slate-300 mr-2"
+                              src={isAuthenticated.user.image}
+                            />
+                            <div>
+                              <h4 className="text-[12px] leading-[3px]">
+                                {addEllipses(isAuthenticated.user.name, 15, 0)}
+                              </h4>
+                              <small className="text-[10px] opacity-70">
+                                {addEllipses(isAuthenticated.user.email, 25, 0)}
+                              </small>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex items-center hover:bg-slate-200 text-[12px] gap-2 py-3 px-1">
+                              <User size={12} />
+                              Profile
+                            </div>
+                            <div className="flex items-center hover:bg-slate-200 text-[12px] gap-2 py-3 px-1">
+                              <Setting2 size={12} />
+                              Settings
+                            </div>
+                          </div>
+                          <span
+                            onClick={() => signOut()}
+                            className="h-[35px] absolute bottom-0 w-full flex items-center gap-1 py-2 px-2 text-[12px] bg-red-500 text-white rounded-md animate font-semibold cursor-pointer hover:scale-105 z-0"
+                          >
+                            <Logout color="#fff" size={16} />{" "}
+                            <span>
+                              {lang === "en" ? "Logout" : "Se déconnecter"}
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </ClickAwayListener>
+                  )}
                 </div>
               ) : (
                 <div className="relative z-0">
